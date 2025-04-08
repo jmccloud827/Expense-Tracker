@@ -6,14 +6,35 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		30CEE4612DA578C700B561D6 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEE4602DA578C700B561D6 /* App.swift */; };
+		30CEE4652DA578C900B561D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30CEE4642DA578C900B561D6 /* Assets.xcassets */; };
+		30CEE46F2DA579DD00B561D6 /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEE46E2DA579DD00B561D6 /* Month.swift */; };
+		30CEE4732DA57AE000B561D6 /* YearAndMonthList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEE4722DA57AE000B561D6 /* YearAndMonthList.swift */; };
+		30CEE4752DA58F2F00B561D6 /* Year.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEE4742DA58F2F00B561D6 /* Year.swift */; };
+		30CEE47B2DA5988A00B561D6 /* RecurringExpense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEE47A2DA5988A00B561D6 /* RecurringExpense.swift */; };
+		30CEE47D2DA59B4700B561D6 /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEE47C2DA59B4700B561D6 /* Expense.swift */; };
+		30CEE4802DA5A09000B561D6 /* RecurringExpenseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEE47F2DA5A09000B561D6 /* RecurringExpenseList.swift */; };
+		30CEE4842DA5A1AD00B561D6 /* EditRecurringExpense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEE4832DA5A1AD00B561D6 /* EditRecurringExpense.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		30CEE45D2DA578C700B561D6 /* FinanceTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinanceTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		30CEE4602DA578C700B561D6 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		30CEE4642DA578C900B561D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		30CEE46E2DA579DD00B561D6 /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
+		30CEE4722DA57AE000B561D6 /* YearAndMonthList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearAndMonthList.swift; sourceTree = "<group>"; };
+		30CEE4742DA58F2F00B561D6 /* Year.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Year.swift; sourceTree = "<group>"; };
+		30CEE47A2DA5988A00B561D6 /* RecurringExpense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringExpense.swift; sourceTree = "<group>"; };
+		30CEE47C2DA59B4700B561D6 /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
+		30CEE47F2DA5A09000B561D6 /* RecurringExpenseList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringExpenseList.swift; sourceTree = "<group>"; };
+		30CEE4832DA5A1AD00B561D6 /* EditRecurringExpense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRecurringExpense.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		30CEE45F2DA578C700B561D6 /* FinanceTracker */ = {
+		30CEE4782DA596D500B561D6 /* Preview Content */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = FinanceTracker;
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +53,7 @@
 		30CEE4542DA578C700B561D6 = {
 			isa = PBXGroup;
 			children = (
-				30CEE45F2DA578C700B561D6 /* FinanceTracker */,
+				30CEE4762DA596CC00B561D6 /* FinanceTracker */,
 				30CEE45E2DA578C700B561D6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +64,47 @@
 				30CEE45D2DA578C700B561D6 /* FinanceTracker.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		30CEE4762DA596CC00B561D6 /* FinanceTracker */ = {
+			isa = PBXGroup;
+			children = (
+				30CEE4602DA578C700B561D6 /* App.swift */,
+				30CEE4812DA5A15600B561D6 /* Pages */,
+				30CEE4822DA5A1A500B561D6 /* Views */,
+				30CEE47E2DA59B8000B561D6 /* Models */,
+				30CEE4642DA578C900B561D6 /* Assets.xcassets */,
+				30CEE4782DA596D500B561D6 /* Preview Content */,
+			);
+			path = FinanceTracker;
+			sourceTree = "<group>";
+		};
+		30CEE47E2DA59B8000B561D6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				30CEE46E2DA579DD00B561D6 /* Month.swift */,
+				30CEE4742DA58F2F00B561D6 /* Year.swift */,
+				30CEE47A2DA5988A00B561D6 /* RecurringExpense.swift */,
+				30CEE47C2DA59B4700B561D6 /* Expense.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		30CEE4812DA5A15600B561D6 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				30CEE4722DA57AE000B561D6 /* YearAndMonthList.swift */,
+				30CEE47F2DA5A09000B561D6 /* RecurringExpenseList.swift */,
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
+		30CEE4822DA5A1A500B561D6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				30CEE4832DA5A1AD00B561D6 /* EditRecurringExpense.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -61,7 +123,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				30CEE45F2DA578C700B561D6 /* FinanceTracker */,
+				30CEE4782DA596D500B561D6 /* Preview Content */,
 			);
 			name = FinanceTracker;
 			packageProductDependencies = (
@@ -109,6 +171,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30CEE4652DA578C900B561D6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +182,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30CEE47D2DA59B4700B561D6 /* Expense.swift in Sources */,
+				30CEE47B2DA5988A00B561D6 /* RecurringExpense.swift in Sources */,
+				30CEE4842DA5A1AD00B561D6 /* EditRecurringExpense.swift in Sources */,
+				30CEE4802DA5A09000B561D6 /* RecurringExpenseList.swift in Sources */,
+				30CEE4752DA58F2F00B561D6 /* Year.swift in Sources */,
+				30CEE46F2DA579DD00B561D6 /* Month.swift in Sources */,
+				30CEE4732DA57AE000B561D6 /* YearAndMonthList.swift in Sources */,
+				30CEE4612DA578C700B561D6 /* App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
