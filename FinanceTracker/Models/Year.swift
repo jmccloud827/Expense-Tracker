@@ -1,8 +1,7 @@
 import SwiftData
 import SwiftUI
 
-@Model
-class Year: Identifiable {
+@Model class Year: Identifiable {
     var id: Int
     var months: [Month] = []
     

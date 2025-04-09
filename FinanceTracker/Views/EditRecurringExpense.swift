@@ -1,17 +1,19 @@
-import SwiftData
 import SwiftUI
 
 struct EditRecurringExpense: View {
+    @Environment(\.colorScheme) private var colorScheme
+    
     @Bindable var expense: RecurringExpense
     
-    @State private var fixedCost = 0
+    @State private var fixedCost = 0.0
     
     init(expense: RecurringExpense) {
         self.expense = expense
-        if case let .fixed(cost) = expense.type {
+        switch expense.type {
+        case let .fixed(cost):
             _fixedCost = .init(initialValue: cost)
-        } else {
-            _fixedCost = .init(initialValue: 0)
+        case let .variable(estimate):
+            _fixedCost = .init(initialValue: estimate)
         }
     }
     
@@ -19,44 +21,49 @@ struct EditRecurringExpense: View {
         Form {
             TextField("Name", text: $expense.name)
             
-            if case .fixed = expense.type {
-                HStack {
+            HStack {
+                switch expense.type {
+                case .fixed:
                     Text("Cost:")
+                case .variable:
+                    Text("Estimate:")
+                }
                     
-                    TextField("", value: $fixedCost, format: .number)
-                        .multilineTextAlignment(.trailing)
-                }
-                .onChange(of: fixedCost) {
-                    expense.type = .fixed(cost: fixedCost)
-                }
+                TextField("", value: $fixedCost, format: .currency(code: "USD"))
+                    .multilineTextAlignment(.trailing)
+            }
+            .onChange(of: fixedCost) {
+                expense.type = .fixed(cost: fixedCost)
             }
             
             Section("Type") {
                 Button {
-                    withAnimation {
-                        expense.type = .fixed(cost: 0)
-                    }
+                    expense.type = .fixed(cost: 0)
                 } label: {
                     HStack {
+                        Text("Fixed")
+                            .foregroundStyle(colorScheme == .light ? .black : .white)
+                        
+                        Spacer()
+                        
                         if case .fixed = expense.type {
                             Image(systemName: "checkmark")
                         }
-                        
-                        Text("Fixed")
                     }
                 }
                 
                 Button {
-                    withAnimation {
-                        expense.type = .variable
-                    }
+                    expense.type = .variable(estimate: 0)
                 } label: {
                     HStack {
+                        Text("Variable")
+                            .foregroundStyle(colorScheme == .light ? .black : .white)
+                        
+                        Spacer()
+                        
                         if case .variable = expense.type {
                             Image(systemName: "checkmark")
                         }
-                        
-                        Text("Variable")
                     }
                 }
             }

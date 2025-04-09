@@ -14,8 +14,10 @@
 		30CEE4752DA58F2F00B561D6 /* Year.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEE4742DA58F2F00B561D6 /* Year.swift */; };
 		30CEE47B2DA5988A00B561D6 /* RecurringExpense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEE47A2DA5988A00B561D6 /* RecurringExpense.swift */; };
 		30CEE47D2DA59B4700B561D6 /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEE47C2DA59B4700B561D6 /* Expense.swift */; };
-		30CEE4802DA5A09000B561D6 /* RecurringExpenseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEE47F2DA5A09000B561D6 /* RecurringExpenseList.swift */; };
+		30CEE4802DA5A09000B561D6 /* EditIncome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEE47F2DA5A09000B561D6 /* EditIncome.swift */; };
 		30CEE4842DA5A1AD00B561D6 /* EditRecurringExpense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEE4832DA5A1AD00B561D6 /* EditRecurringExpense.swift */; };
+		30CEE4882DA5C3D900B561D6 /* Onbarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEE4872DA5C3D900B561D6 /* Onbarding.swift */; };
+		30CEE48C2DA6990200B561D6 /* IncomeAndMonthlyExpenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEE48B2DA6990200B561D6 /* IncomeAndMonthlyExpenses.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,8 +29,10 @@
 		30CEE4742DA58F2F00B561D6 /* Year.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Year.swift; sourceTree = "<group>"; };
 		30CEE47A2DA5988A00B561D6 /* RecurringExpense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringExpense.swift; sourceTree = "<group>"; };
 		30CEE47C2DA59B4700B561D6 /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
-		30CEE47F2DA5A09000B561D6 /* RecurringExpenseList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringExpenseList.swift; sourceTree = "<group>"; };
+		30CEE47F2DA5A09000B561D6 /* EditIncome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIncome.swift; sourceTree = "<group>"; };
 		30CEE4832DA5A1AD00B561D6 /* EditRecurringExpense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRecurringExpense.swift; sourceTree = "<group>"; };
+		30CEE4872DA5C3D900B561D6 /* Onbarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onbarding.swift; sourceTree = "<group>"; };
+		30CEE48B2DA6990200B561D6 /* IncomeAndMonthlyExpenses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeAndMonthlyExpenses.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -84,6 +88,7 @@
 			children = (
 				30CEE46E2DA579DD00B561D6 /* Month.swift */,
 				30CEE4742DA58F2F00B561D6 /* Year.swift */,
+				30CEE48B2DA6990200B561D6 /* IncomeAndMonthlyExpenses.swift */,
 				30CEE47A2DA5988A00B561D6 /* RecurringExpense.swift */,
 				30CEE47C2DA59B4700B561D6 /* Expense.swift */,
 			);
@@ -93,8 +98,8 @@
 		30CEE4812DA5A15600B561D6 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				30CEE4872DA5C3D900B561D6 /* Onbarding.swift */,
 				30CEE4722DA57AE000B561D6 /* YearAndMonthList.swift */,
-				30CEE47F2DA5A09000B561D6 /* RecurringExpenseList.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -102,6 +107,7 @@
 		30CEE4822DA5A1A500B561D6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				30CEE47F2DA5A09000B561D6 /* EditIncome.swift */,
 				30CEE4832DA5A1AD00B561D6 /* EditRecurringExpense.swift */,
 			);
 			path = Views;
@@ -185,11 +191,13 @@
 				30CEE47D2DA59B4700B561D6 /* Expense.swift in Sources */,
 				30CEE47B2DA5988A00B561D6 /* RecurringExpense.swift in Sources */,
 				30CEE4842DA5A1AD00B561D6 /* EditRecurringExpense.swift in Sources */,
-				30CEE4802DA5A09000B561D6 /* RecurringExpenseList.swift in Sources */,
+				30CEE4802DA5A09000B561D6 /* EditIncome.swift in Sources */,
+				30CEE4882DA5C3D900B561D6 /* Onbarding.swift in Sources */,
 				30CEE4752DA58F2F00B561D6 /* Year.swift in Sources */,
 				30CEE46F2DA579DD00B561D6 /* Month.swift in Sources */,
 				30CEE4732DA57AE000B561D6 /* YearAndMonthList.swift in Sources */,
 				30CEE4612DA578C700B561D6 /* App.swift in Sources */,
+				30CEE48C2DA6990200B561D6 /* IncomeAndMonthlyExpenses.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

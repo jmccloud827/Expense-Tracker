@@ -1,28 +1,37 @@
 import SwiftData
 import SwiftUI
 
-@Model
-class RecurringExpense: Identifiable {
+@Model class RecurringExpense: Identifiable {
     var id = UUID()
     var name: String
     var type: `Type`
-    var costs: [Int] = []
+    var dateCreated = Date.now
+    var expenses: [Expense] = []
     
-    init(name: String, type: `Type`) {
+    init(name: String, type: Type) {
         self.name = name
         self.type = type
     }
     
-    var averageCost: Int {
-        costs.reduce(0, +) / costs.count
+    var averageExpense: Double {
+        expenses.reduce(0) { $0 + $1.cost } / Double(expenses.count)
     }
     
-    func addCost(_ cost: Int) {
-        costs.append(cost)
+    func addOrUpdateExpense(_ expense: Expense) {
+        if let index = expenses.firstIndex(where: { $0.id == expense.id }) {
+            expenses[index] = expense
+        } else {
+            expenses.append(expense)
+        }
     }
     
     enum `Type`: Codable {
-        case variable
-        case fixed(cost: Int)
+        case variable(estimate: Double)
+        case fixed(cost: Double)
     }
+    
+    public static var samples: [RecurringExpense] = [
+        .init(name: "Mortgage", type: .fixed(cost: 2_000)),
+        .init(name: "Water", type: .variable(estimate: 50))
+    ]
 }
