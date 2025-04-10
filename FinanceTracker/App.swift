@@ -5,13 +5,13 @@ import SwiftUI
 struct App: SwiftUI.App {
     var body: some Scene {
         WindowGroup {
-            Onboarding()
+            ContentView()
         }
         .modelContainer(for: [
+            AppModel.self,
             Year.self,
             Month.self,
             Month.ExpenseModel.self,
-            IncomeAndMonthlyExpenses.self,
             RecurringExpense.self,
             Expense.self
         ])
@@ -20,10 +20,10 @@ struct App: SwiftUI.App {
     static var previewContainer: ModelContainer {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         
-        return try! ModelContainer(for: Year.self,
+        return try! ModelContainer(for: AppModel.self,
+                                   Year.self,
                                    Month.self,
                                    Month.ExpenseModel.self,
-                                   IncomeAndMonthlyExpenses.self,
                                    RecurringExpense.self,
                                    Expense.self,
                                    configurations: config)

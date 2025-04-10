@@ -1,15 +1,16 @@
+import Foundation
 import SwiftData
-import SwiftUI
 
 @Model class Month: Identifiable {
     var id = UUID()
     var integer: Int
     var income: Double
-    var expenses: [ExpenseModel] = []
+    var expenses: [ExpenseModel]
     
     init(integer: Int, income: Double, expenses: [ExpenseModel]) {
         self.integer = integer
         self.income = income
+        self.expenses = expenses
     }
     
     var name: String {
@@ -29,6 +30,10 @@ import SwiftUI
         default: ""
         }
     }
+    
+    var totalExpenses: Double {
+        expenses.reduce(0) { $0 + $1.expense.cost }
+    }
 }
 
 extension Month {
@@ -43,21 +48,17 @@ extension Month {
         }
         
         init(recurringExpense: RecurringExpense) {
+            let expense = Expense(name: recurringExpense.name, cost: recurringExpense.cost)
+            recurringExpense.addOrUpdateExpense(expense)
             self.recurringExpense = recurringExpense
-            switch recurringExpense.type {
-            case let .fixed(cost):
-                self.expense = .init(name: recurringExpense.name, cost: cost)
-            case let .variable(estimate):
-                self.expense = .init(name: recurringExpense.name, cost: estimate)
-            }
+            self.expense = expense
         }
         
         var name: String {
             recurringExpense?.name ?? expense.name
         }
         
-        func addCost(_ cost: Double) {
-            self.expense.cost = cost
+        func onCostChanged() {
             if let recurringExpense = self.recurringExpense {
                 recurringExpense.addOrUpdateExpense(self.expense)
             }

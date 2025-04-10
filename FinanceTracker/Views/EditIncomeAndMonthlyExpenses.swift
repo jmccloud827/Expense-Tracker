@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct EditIncomeAndMonthlyExpenses: View {
-    @Bindable var model: IncomeAndMonthlyExpenses
+    @Bindable var model: AppModel
+    var onAddNewExpense: (RecurringExpense) -> Void = { _ in }
     
     @State private var newExpense: RecurringExpense?
     
@@ -14,12 +15,7 @@ struct EditIncomeAndMonthlyExpenses: View {
                     }
                 }
                     
-                HStack {
-                    Text("Amount Post Tax")
-                        
-                    TextField("", value: $model.income, format: .currency(code: "USD"))
-                        .multilineTextAlignment(.trailing)
-                }
+                DynamicCurrencyTextField("Amount Post Tax", value: $model.income)
             }
             
             LabeledContent {
@@ -29,19 +25,14 @@ struct EditIncomeAndMonthlyExpenses: View {
             }
                 
             Section("Monthly Expenses") {
-                ForEach(model.expenses, id: \.id) { expense in
+                ForEach(model.monthlyExpenses, id: \.id) { expense in
                     NavigationLink {
                         EditRecurringExpense(expense: expense)
                             .navigationTitle("Edit Expense")
                             .navigationBarTitleDisplayMode(.inline)
                     } label: {
                         LabeledContent {
-                            switch expense.type {
-                            case let .fixed(cost):
-                                Text(cost.formatted(.currency(code: "USD")))
-                            case let .variable(estimate):
-                                Text(estimate.formatted(.currency(code: "USD")))
-                            }
+                            Text(expense.cost.formatted(.currency(code: "USD")))
                         } label: {
                             Text(expense.name)
                         }
@@ -49,14 +40,14 @@ struct EditIncomeAndMonthlyExpenses: View {
                 }
                     
                 Button {
-                    newExpense = .init(name: "", type: .fixed(cost: 0))
+                    newExpense = .init(name: "", cost: 0, type: .fixed)
                 } label: {
                     Label("Add Expense", systemImage: "plus")
                 }
             }
             
             LabeledContent {
-                Text(model.totalExpenses.formatted(.currency(code: "USD")))
+                Text(model.totalMonthlyExpenses.formatted(.currency(code: "USD")))
             } label: {
                 Text("Total monthly expenses")
             }
@@ -75,8 +66,9 @@ struct EditIncomeAndMonthlyExpenses: View {
                         
                         ToolbarItem(placement: .automatic) {
                             Button("Done") {
-                                model.expenses.append(expense)
+                                model.monthlyExpenses.append(expense)
                                 newExpense = nil
+                                onAddNewExpense(expense)
                             }
                         }
                     }

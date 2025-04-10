@@ -1,5 +1,4 @@
 import SwiftData
-import SwiftUI
 
 @Model class Year: Identifiable {
     var id: Int

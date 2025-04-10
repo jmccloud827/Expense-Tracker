@@ -1,47 +1,60 @@
-import SwiftData
 import SwiftUI
 
 struct YearAndMonthList: View {
-    @Environment(\.modelContext) private var modelContext
+    @Environment(AppModel.self) private var model
     
-    @Environment(IncomeAndMonthlyExpenses.self) private var incomeAndExpenseModel
-    
-    @Query(sort: \Year.id, order: .reverse) private var years: [Year]
+    @State private var showSettings = false
+    @State private var newExpense: RecurringExpense? = nil
+    @State private var showAddExpenseAlert = false
     
     var body: some View {
         List {
-            ForEach(years, id: \.id) { year in
+            ForEach(model.years, id: \.id) { year in
                 Section(String(year.id)) {
                     ForEach(year.sortedMonths, id: \.id) { month in
-                        Text(month.name)
+                        NavigationLink {
+                            EditMonth(month: month)
+                                .navigationTitle(month.name)
+                                .navigationBarTitleDisplayMode(.inline)
+                        } label: {
+                            Text(month.name)
+                        }
+                    }
+                }
+            }
+        }
+        .navigationTitle("Months")
+        .toolbar {
+            ToolbarItem(placement: .navigation) {
+                Button {
+                    showSettings = true
+                } label: {
+                    Label("Settings", systemImage: "gearshape.fill")
+                }
+            }
+        }
+        .sheet(isPresented: $showSettings) {
+            NavigationStack {
+                EditIncomeAndMonthlyExpenses(model: model) { expense in
+                    newExpense = expense
+                    showAddExpenseAlert = true
+                }
+                .navigationTitle("Settings")
+                .navigationBarTitleDisplayMode(.inline)
+                .alert("Would you like to add this new expense to the current month?", isPresented: $showAddExpenseAlert) {
+                    Button("No", role: .cancel) {}
+                    
+                    Button("Yes") {
+                        if let currentMonth = model.currentMonth,
+                           let newExpense {
+                            currentMonth.expenses.append(.init(recurringExpense: newExpense))
+                        }
                     }
                 }
             }
         }
         .onAppear {
-            addYearOrMonthIfDoesNotExists()
-        }
-    }
-    
-    private func addYearOrMonthIfDoesNotExists() {
-        let currentYearID = Calendar.current.component(.year, from: Date.now)
-        if let currentYear = years.first(where: { $0.id == currentYearID }) {
-            addMonthIfDoesNotExists(currentYear: currentYear)
-        } else {
-            let year = Year(id: currentYearID)
-            addMonthIfDoesNotExists(currentYear: year)
-            modelContext.insert(year)
-        }
-    }
-    
-    private func addMonthIfDoesNotExists(currentYear: Year) {
-        let currentMonthID = Calendar.current.component(.month, from: Date.now)
-        for month in (currentYear.sortedMonths.first?.integer ?? currentMonthID) ... currentMonthID {
-            currentYear.months.append(
-                .init(integer: month,
-                      income: incomeAndExpenseModel.monthlyIncome,
-                      expenses: incomeAndExpenseModel.expenses.map { .init(recurringExpense: $0) })
-            )
+            model.addYearOrMonthIfDoesNotExists()
         }
     }
 }
@@ -51,5 +64,5 @@ struct YearAndMonthList: View {
         YearAndMonthList()
     }
     .modelContainer(App.previewContainer)
-    .environment(IncomeAndMonthlyExpenses.sample)
+    .environment(AppModel.sample)
 }

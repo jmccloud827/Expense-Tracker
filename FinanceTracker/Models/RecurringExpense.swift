@@ -1,15 +1,17 @@
+import Foundation
 import SwiftData
-import SwiftUI
 
 @Model class RecurringExpense: Identifiable {
     var id = UUID()
     var name: String
+    var cost: Double
     var type: `Type`
     var dateCreated = Date.now
     var expenses: [Expense] = []
     
-    init(name: String, type: Type) {
+    init(name: String, cost: Double, type: Type) {
         self.name = name
+        self.cost = cost
         self.type = type
     }
     
@@ -26,12 +28,12 @@ import SwiftUI
     }
     
     enum `Type`: Codable {
-        case variable(estimate: Double)
-        case fixed(cost: Double)
+        case variable
+        case fixed
     }
     
     public static var samples: [RecurringExpense] = [
-        .init(name: "Mortgage", type: .fixed(cost: 2_000)),
-        .init(name: "Water", type: .variable(estimate: 50))
+        .init(name: "Mortgage", cost: 2_000, type: .fixed),
+        .init(name: "Water", cost: 50, type: .variable)
     ]
 }
