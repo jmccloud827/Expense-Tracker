@@ -24,7 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		30CEE45D2DA578C700B561D6 /* FinanceTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinanceTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		30CEE45D2DA578C700B561D6 /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30CEE4602DA578C700B561D6 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		30CEE4642DA578C900B561D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		30CEE46E2DA579DD00B561D6 /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
@@ -63,7 +63,7 @@
 		30CEE4542DA578C700B561D6 = {
 			isa = PBXGroup;
 			children = (
-				30CEE4762DA596CC00B561D6 /* FinanceTracker */,
+				30CEE4762DA596CC00B561D6 /* App */,
 				30CEE45E2DA578C700B561D6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -71,12 +71,12 @@
 		30CEE45E2DA578C700B561D6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				30CEE45D2DA578C700B561D6 /* FinanceTracker.app */,
+				30CEE45D2DA578C700B561D6 /* App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		30CEE4762DA596CC00B561D6 /* FinanceTracker */ = {
+		30CEE4762DA596CC00B561D6 /* App */ = {
 			isa = PBXGroup;
 			children = (
 				30CEE4602DA578C700B561D6 /* App.swift */,
@@ -86,7 +86,7 @@
 				30CEE4642DA578C900B561D6 /* Assets.xcassets */,
 				30CEE4782DA596D500B561D6 /* Preview Content */,
 			);
-			path = FinanceTracker;
+			path = App;
 			sourceTree = "<group>";
 		};
 		30CEE47E2DA59B8000B561D6 /* Models */ = {
@@ -125,9 +125,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		30CEE45C2DA578C700B561D6 /* FinanceTracker */ = {
+		30CEE45C2DA578C700B561D6 /* App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 30CEE46B2DA578C900B561D6 /* Build configuration list for PBXNativeTarget "FinanceTracker" */;
+			buildConfigurationList = 30CEE46B2DA578C900B561D6 /* Build configuration list for PBXNativeTarget "App" */;
 			buildPhases = (
 				30CEE4592DA578C700B561D6 /* Sources */,
 				30CEE45A2DA578C700B561D6 /* Frameworks */,
@@ -140,11 +140,11 @@
 			fileSystemSynchronizedGroups = (
 				30CEE4782DA596D500B561D6 /* Preview Content */,
 			);
-			name = FinanceTracker;
+			name = App;
 			packageProductDependencies = (
 			);
 			productName = FinanceTracker;
-			productReference = 30CEE45D2DA578C700B561D6 /* FinanceTracker.app */;
+			productReference = 30CEE45D2DA578C700B561D6 /* App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -162,7 +162,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 30CEE4582DA578C700B561D6 /* Build configuration list for PBXProject "FinanceTracker" */;
+			buildConfigurationList = 30CEE4582DA578C700B561D6 /* Build configuration list for PBXProject "Expense Tracker" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -176,7 +176,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				30CEE45C2DA578C700B561D6 /* FinanceTracker */,
+				30CEE45C2DA578C700B561D6 /* App */,
 			);
 		};
 /* End PBXProject section */
@@ -342,7 +342,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"FinanceTracker/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
 				DEVELOPMENT_TEAM = JY83NY58JG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -356,7 +356,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jacobmccloud.FinanceTracker;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jacobmccloud.Expense-Tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -371,7 +371,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"FinanceTracker/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
 				DEVELOPMENT_TEAM = JY83NY58JG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -385,7 +385,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jacobmccloud.FinanceTracker;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jacobmccloud.Expense-Tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -396,7 +396,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		30CEE4582DA578C700B561D6 /* Build configuration list for PBXProject "FinanceTracker" */ = {
+		30CEE4582DA578C700B561D6 /* Build configuration list for PBXProject "Expense Tracker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				30CEE4692DA578C900B561D6 /* Debug */,
@@ -405,7 +405,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		30CEE46B2DA578C900B561D6 /* Build configuration list for PBXNativeTarget "FinanceTracker" */ = {
+		30CEE46B2DA578C900B561D6 /* Build configuration list for PBXNativeTarget "App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				30CEE46C2DA578C900B561D6 /* Debug */,
