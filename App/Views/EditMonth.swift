@@ -12,9 +12,6 @@ struct EditMonth: View {
             Section("Recurring Expenses") {
                 ForEach($month.expenses.filter { $0.wrappedValue.recurringExpense != nil }, id: \.id) { $expenseModel in
                     DynamicCurrencyTextField($expenseModel.wrappedValue.name, value: $expenseModel.expense.cost)
-                        .onChange(of: $expenseModel.wrappedValue.expense.cost) {
-                            $expenseModel.wrappedValue.onCostChanged()
-                        }
                 }
             }
             
@@ -22,9 +19,6 @@ struct EditMonth: View {
                 ForEach($month.expenses.filter { $0.wrappedValue.recurringExpense == nil }, id: \.id) { $expenseModel in
                     DynamicCurrencyTextField(value: $expenseModel.expense.cost) {
                         TextField("Name", text: $expenseModel.expense.name)
-                    }
-                    .onChange(of: $expenseModel.wrappedValue.expense.cost) {
-                        $expenseModel.wrappedValue.onCostChanged()
                     }
                 }
                 

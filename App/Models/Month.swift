@@ -34,6 +34,10 @@ import SwiftData
     var totalExpenses: Double {
         expenses.reduce(0) { $0 + $1.expense.cost }
     }
+    
+    var netIncome: Double {
+        income - totalExpenses
+    }
 }
 
 extension Month {
@@ -48,20 +52,12 @@ extension Month {
         }
         
         init(recurringExpense: RecurringExpense) {
-            let expense = Expense(name: recurringExpense.name, cost: recurringExpense.cost)
-            recurringExpense.addOrUpdateExpense(expense)
+            self.expense = .init(name: recurringExpense.name, cost: recurringExpense.cost)
             self.recurringExpense = recurringExpense
-            self.expense = expense
         }
         
         var name: String {
             recurringExpense?.name ?? expense.name
-        }
-        
-        func onCostChanged() {
-            if let recurringExpense = self.recurringExpense {
-                recurringExpense.addOrUpdateExpense(self.expense)
-            }
         }
     }
 }

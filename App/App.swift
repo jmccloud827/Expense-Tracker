@@ -32,7 +32,7 @@ struct App: SwiftUI.App {
 
 /// App Icon
 #Preview {
-    Image(systemName: "text.book.closed.fill")
+    Image(systemName: "dollarsign.square.fill")
         .resizable()
         .aspectRatio(contentMode: .fit)
         .foregroundStyle(.white)

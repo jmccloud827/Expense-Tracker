@@ -7,24 +7,11 @@ import SwiftData
     var cost: Double
     var type: `Type`
     var dateCreated = Date.now
-    var expenses: [Expense] = []
     
     init(name: String, cost: Double, type: Type) {
         self.name = name
         self.cost = cost
         self.type = type
-    }
-    
-    var averageExpense: Double {
-        expenses.reduce(0) { $0 + $1.cost } / Double(expenses.count)
-    }
-    
-    func addOrUpdateExpense(_ expense: Expense) {
-        if let index = expenses.firstIndex(where: { $0.id == expense.id }) {
-            expenses[index] = expense
-        } else {
-            expenses.append(expense)
-        }
     }
     
     enum `Type`: Codable {

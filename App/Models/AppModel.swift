@@ -63,6 +63,24 @@ import SwiftData
         }
     }
     
+    func getExpensesFor(recurringExpense: RecurringExpense) -> [(year: Int, months: [(month: String, cost: Double)])] {
+        var expenses: [(year: Int, months: [(month: String, cost: Double)])] = []
+        for year in years {
+            var monthExpenses: [(month: String, cost: Double)] = []
+            for month in year.months {
+                monthExpenses.append(contentsOf: month.expenses.filter {
+                    $0.recurringExpense?.id == recurringExpense.id
+                }.map {
+                    (month.name, $0.expense.cost)
+                })
+            }
+            
+            expenses.append((year.id, monthExpenses))
+        }
+        
+        return expenses
+    }
+    
     static var sample: AppModel {
         let model = AppModel()
         model.income = 90_000
