@@ -27,7 +27,7 @@ struct EditIncomeAndMonthlyExpenses: View {
             Section("Monthly Expenses") {
                 ForEach(model.monthlyExpenses, id: \.id) { expense in
                     NavigationLink {
-                        EditRecurringExpense(expense: expense)
+                        EditRecurringExpense(expense: expense, expenses: model.getExpensesFor(recurringExpense: expense))
                             .navigationTitle("Edit Expense")
                             .navigationBarTitleDisplayMode(.inline)
                     } label: {
@@ -54,7 +54,7 @@ struct EditIncomeAndMonthlyExpenses: View {
         }
         .fullScreenCover(item: $newExpense) { expense in
             NavigationStack {
-                EditRecurringExpense(expense: expense)
+                EditRecurringExpense(expense: expense, expenses: [])
                     .navigationTitle("New Expense")
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {

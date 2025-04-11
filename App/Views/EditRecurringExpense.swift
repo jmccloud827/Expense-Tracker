@@ -4,6 +4,7 @@ struct EditRecurringExpense: View {
     @Environment(\.colorScheme) private var colorScheme
     
     @Bindable var expense: RecurringExpense
+    let expenses: [(year: Int, months: [(month: String, cost: Double)])]
     
     var body: some View {
         Form {
@@ -49,10 +50,39 @@ struct EditRecurringExpense: View {
                     }
                 }
             }
+            
+            if !expenses.isEmpty {
+                LabeledContent {
+                    Text(averageCost.formatted(.currency(code: "USD")))
+                } label: {
+                    Text("Average:")
+                }
+                
+                ForEach(expenses, id: \.year) { year in
+                    Section(String(year.year)) {
+                        ForEach(year.months, id: \.month) { month in
+                            LabeledContent {
+                                Text(month.cost.formatted(.currency(code: "USD")))
+                            } label: {
+                                Text(month.month)
+                            }
+                        }
+                    }
+                }
+            }
         }
+    }
+    
+    private var averageCost: Double {
+        let allCosts = expenses.flatMap(\.months).map(\.cost)
+        return allCosts.reduce(0, +) / Double(allCosts.count)
     }
 }
 
 #Preview {
-    EditRecurringExpense(expense: .init(name: "", cost: 0, type: .fixed))
+    let model = AppModel.sample
+    let recurringExpense = model.monthlyExpenses.first { $0.type == .variable }!
+    let expenses = model.getExpensesFor(recurringExpense: recurringExpense)
+    
+    return EditRecurringExpense(expense: recurringExpense, expenses: expenses)
 }

@@ -17,7 +17,11 @@ struct YearAndMonthList: View {
                                 .navigationTitle(month.name)
                                 .navigationBarTitleDisplayMode(.inline)
                         } label: {
-                            Text(month.name)
+                            LabeledContent {
+                                Text(month.netIncome.formatted(.currency(code: "USD")))
+                            } label: {
+                                Text(month.name)
+                            }
                         }
                     }
                 }

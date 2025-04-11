@@ -11,6 +11,7 @@ struct ContentView: View {
                     .environment(model)
             } else {
                 Onboarding()
+                    .environment(AppModel())
             }
         }
     }

@@ -85,8 +85,38 @@ import SwiftData
         let model = AppModel()
         model.income = 90_000
         model.incomeType = .yearly
-        model.monthlyExpenses = RecurringExpense.samples
-        model.addYearOrMonthIfDoesNotExists()
+        model.monthlyExpenses = [
+            .init(name: "Mortgage", cost: 2_000, type: .fixed),
+            .init(name: "Water", cost: 50, type: .variable),
+            .init(name: "Credit Card", cost: 5_500, type: .variable)
+        ]
+        let currentYearID = Calendar.current.component(.year, from: Date.now)
+        let currentYear = Year(id: currentYearID)
+        let currentMonthID = Calendar.current.component(.month, from: Date.now)
+        for monthID in 1 ... currentMonthID {
+            let month = Month(integer: monthID, income: model.monthlyIncome, expenses: model.monthlyExpenses.map { .init(recurringExpense: $0) })
+            for expenseModel in month.expenses {
+                if let recurringExpense = expenseModel.recurringExpense,
+                   recurringExpense.type == .variable {
+                    expenseModel.expense.cost = expenseModel.expense.cost * (Double.random(in: 0.5 ... 1.5))
+                }
+            }
+            currentYear.months.append(month)
+        }
+        model.years.append(currentYear)
+        
+        let previousYear = Year(id: currentYearID - 1)
+        for monthID in 1 ... 12 {
+            let month = Month(integer: monthID, income: model.monthlyIncome, expenses: model.monthlyExpenses.map { .init(recurringExpense: $0) })
+            for expenseModel in month.expenses {
+                if let recurringExpense = expenseModel.recurringExpense,
+                   recurringExpense.type == .variable {
+                    expenseModel.expense.cost = expenseModel.expense.cost * (Double.random(in: 0.5 ... 1.5))
+                }
+            }
+            previousYear.months.append(month)
+        }
+        model.years.append(previousYear)
         
         return model
     }

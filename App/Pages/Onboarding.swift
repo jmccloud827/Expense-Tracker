@@ -2,8 +2,7 @@ import SwiftUI
 
 struct Onboarding: View {
     @Environment(\.modelContext) private var modelContext
-    
-    @State private var model = AppModel()
+    @Environment(AppModel.self) private var model
     
     var body: some View {
         EditIncomeAndMonthlyExpenses(model: .init())
@@ -27,4 +26,5 @@ struct Onboarding: View {
 #Preview {
     Onboarding()
         .modelContainer(App.previewContainer)
+        .environment(AppModel.sample)
 }

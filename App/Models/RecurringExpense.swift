@@ -18,9 +18,4 @@ import SwiftData
         case variable
         case fixed
     }
-    
-    public static var samples: [RecurringExpense] = [
-        .init(name: "Mortgage", cost: 2_000, type: .fixed),
-        .init(name: "Water", cost: 50, type: .variable)
-    ]
 }
