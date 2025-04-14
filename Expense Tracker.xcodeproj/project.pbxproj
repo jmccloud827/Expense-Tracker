@@ -30,6 +30,8 @@
 		302493FE2DAD7D7900101911 /* RecurringExpense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringExpense.swift; sourceTree = "<group>"; };
 		302494002DAD7D9D00101911 /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		302494042DAD845B00101911 /* EditRecurringExpense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRecurringExpense.swift; sourceTree = "<group>"; };
+		302494062DAD87CB00101911 /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
+		302494072DAD87FD00101911 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		30CEE45D2DA578C700B561D6 /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30CEE4602DA578C700B561D6 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		30CEE4642DA578C900B561D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -86,10 +88,12 @@
 			isa = PBXGroup;
 			children = (
 				30CEE4602DA578C700B561D6 /* App.swift */,
-				30CEE4812DA5A15600B561D6 /* Pages */,
+				30CEE4812DA5A15600B561D6 /* Screens */,
 				30CEE4822DA5A1A500B561D6 /* Views */,
 				30CEE47E2DA59B8000B561D6 /* Models */,
 				30CEE4642DA578C900B561D6 /* Assets.xcassets */,
+				302494072DAD87FD00101911 /* Info.plist */,
+				302494062DAD87CB00101911 /* App.entitlements */,
 				30CEE4782DA596D500B561D6 /* Preview Content */,
 			);
 			path = App;
@@ -109,14 +113,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		30CEE4812DA5A15600B561D6 /* Pages */ = {
+		30CEE4812DA5A15600B561D6 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
 				30CEE4872DA5C3D900B561D6 /* ContentView.swift */,
 				30CEE4912DA7F49C00B561D6 /* Onboarding.swift */,
 				30CEE4722DA57AE000B561D6 /* YearAndMonthList.swift */,
 			);
-			path = Pages;
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		30CEE4822DA5A1A500B561D6 /* Views */ = {
@@ -352,12 +356,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
 				DEVELOPMENT_TEAM = JY83NY58JG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Expense Tracker";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -382,12 +388,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
 				DEVELOPMENT_TEAM = JY83NY58JG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Expense Tracker";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

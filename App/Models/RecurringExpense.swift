@@ -1,12 +1,14 @@
 import Foundation
 import SwiftData
 
-@Model class RecurringExpense: Identifiable {
+@Model final class RecurringExpense: Identifiable {
     var id = UUID()
-    var name: String
-    var cost: Double
-    var type: `Type`
+    var name: String = ""
+    var cost: Double = 0.0
+    var type: `Type` = `Type`.fixed
     var dateCreated = Date.now
+    var appModel: AppModel?
+    var expenseModel: Month.ExpenseModel?
     
     init(name: String, cost: Double, type: Type) {
         self.name = name

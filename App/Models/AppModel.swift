@@ -1,12 +1,27 @@
 import Foundation
 import SwiftData
 
-@Model class AppModel: Identifiable {
+@Model final class AppModel: Identifiable {
     var id = UUID()
-    var monthlyIncomes: [RecurringIncome] = []
-    var monthlyExpenses: [RecurringExpense] = []
-    var years: [Year] = []
+    @Relationship(inverse: \RecurringIncome.appModel) private var monthlyIncomesBackingData: [RecurringIncome]? = []
+    @Relationship(inverse: \RecurringExpense.appModel) private var monthlyExpensesBackingData: [RecurringExpense]? = []
+    @Relationship(inverse: \Year.appModel) private var yearsBackingData: [Year]? = []
     var dateCreated = Date.now
+    
+    var monthlyIncomes: [RecurringIncome] {
+        get { monthlyIncomesBackingData ?? [] }
+        set { monthlyIncomesBackingData = newValue }
+    }
+    
+    var monthlyExpenses: [RecurringExpense] {
+        get { monthlyExpensesBackingData ?? [] }
+        set { monthlyExpensesBackingData = newValue }
+    }
+    
+    var years: [Year] {
+        get { yearsBackingData ?? [] }
+        set { yearsBackingData = newValue }
+    }
     
     init() {}
     

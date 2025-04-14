@@ -1,8 +1,14 @@
 import SwiftData
 
-@Model class Year: Identifiable {
-    var id: Int
-    var months: [Month] = []
+@Model final class Year: Identifiable {
+    var id: Int = 0
+    @Relationship(inverse: \Month.year) private var monthsBackingData: [Month]? = []
+    var appModel: AppModel?
+    
+    var months: [Month] {
+        get { monthsBackingData ?? [] }
+        set { monthsBackingData = newValue }
+    }
     
     init(id: Int) {
         self.id = id

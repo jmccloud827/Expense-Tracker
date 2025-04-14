@@ -20,6 +20,13 @@ struct Onboarding: View {
                     .padding(.horizontal)
                 }
             }
+        #if DEBUG
+            .toolbar {
+                Button("Sample") {
+                    modelContext.insert(AppModel.sample)
+                }
+            }
+        #endif
     }
 }
 

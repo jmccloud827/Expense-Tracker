@@ -1,11 +1,22 @@
 import Foundation
 import SwiftData
 
-@Model class Month: Identifiable {
+@Model final class Month: Identifiable {
     var id = UUID()
-    var integer: Int
-    var incomes: [IncomeModel]
-    var expenses: [ExpenseModel]
+    var integer: Int = 0
+    @Relationship(inverse: \IncomeModel.month) private var incomesBackingData: [IncomeModel]?
+    @Relationship(inverse: \ExpenseModel.month) private var expensesBackingData: [ExpenseModel]?
+    var year: Year?
+    
+    var incomes: [IncomeModel] {
+        get { incomesBackingData ?? [] }
+        set { incomesBackingData = newValue }
+    }
+    
+    var expenses: [ExpenseModel] {
+        get { expensesBackingData ?? [] }
+        set { expensesBackingData = newValue }
+    }
     
     init(integer: Int, incomes: [IncomeModel], expenses: [ExpenseModel]) {
         self.integer = integer
@@ -47,9 +58,15 @@ import SwiftData
 extension Month {
     @Model class IncomeModel: Identifiable {
         var id = UUID()
-        var income: Income
-        var recurringIncome: RecurringIncome?
+        @Relationship(inverse: \Income.incomeModel) private var incomeBackingData: Income?
+        @Relationship(inverse: \RecurringIncome.incomeModel) var recurringIncome: RecurringIncome?
         var dateCreated = Date.now
+        var month: Month?
+        
+        var income: Income {
+            get { incomeBackingData ?? .init(name: "", amount: 0) }
+            set { incomeBackingData = newValue }
+        }
         
         init(name: String, amount: Double) {
             self.income = .init(name: name, amount: amount)
@@ -67,9 +84,15 @@ extension Month {
     
     @Model class ExpenseModel: Identifiable {
         var id = UUID()
-        var expense: Expense
-        var recurringExpense: RecurringExpense?
+        @Relationship(inverse: \Expense.expenseModel) private var expenseBackingData: Expense?
+        @Relationship(inverse: \RecurringExpense.expenseModel) var recurringExpense: RecurringExpense?
         var dateCreated = Date.now
+        var month: Month?
+        
+        var expense: Expense {
+            get { expenseBackingData ?? .init(name: "", cost: 0) }
+            set { expenseBackingData = newValue }
+        }
         
         init(name: String, cost: Double) {
             self.expense = .init(name: name, cost: cost)

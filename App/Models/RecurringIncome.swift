@@ -1,12 +1,14 @@
 import Foundation
 import SwiftData
 
-@Model class RecurringIncome: Identifiable {
+@Model final class RecurringIncome: Identifiable {
     var id = UUID()
-    var name: String
-    var amount: Double
-    var type: `Type`
+    var name: String = ""
+    var amount: Double = 0.0
+    var type: `Type` = `Type`.fixed
     var dateCreated = Date.now
+    var appModel: AppModel?
+    var incomeModel: Month.IncomeModel?
     
     init(name: String, amount: Double, type: Type) {
         self.name = name
