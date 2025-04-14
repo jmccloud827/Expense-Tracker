@@ -5,8 +5,30 @@ struct EditMonth: View {
     
     var body: some View {
         Form {
-            Section("Income") {
-                DynamicCurrencyTextField("Income", value: $month.income)
+            Section("Recurring Income Sources") {
+                ForEach($month.incomes.filter { $0.wrappedValue.recurringIncome != nil }, id: \.id) { $incomeModel in
+                    DynamicCurrencyTextField($incomeModel.wrappedValue.name, value: $incomeModel.income.amount)
+                }
+            }
+            
+            Section("Other Income Sources") {
+                ForEach($month.incomes.filter { $0.wrappedValue.recurringIncome == nil }, id: \.id) { $incomeModel in
+                    DynamicCurrencyTextField(value: $incomeModel.income.amount) {
+                        TextField("Name", text: $incomeModel.income.name)
+                    }
+                }
+                
+                Button {
+                    month.incomes.append(.init(name: "", amount: 0))
+                } label: {
+                    Label("Add Income Source", systemImage: "plus")
+                }
+            }
+            
+            LabeledContent {
+                Text(month.totalIncomes.formatted(.currency(code: "USD")))
+            } label: {
+                Text("Total Income:")
             }
             
             Section("Recurring Expenses") {
@@ -32,13 +54,13 @@ struct EditMonth: View {
             LabeledContent {
                 Text(month.totalExpenses.formatted(.currency(code: "USD")))
             } label: {
-                Text("Total Expenses")
+                Text("Total Expenses:")
             }
             
             LabeledContent {
-                Text((month.income - month.totalExpenses).formatted(.currency(code: "USD")))
+                Text((month.totalIncomes - month.totalExpenses).formatted(.currency(code: "USD")))
             } label: {
-                Text("Saved")
+                Text("Net Income:")
             }
         }
     }

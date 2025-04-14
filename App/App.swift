@@ -11,8 +11,11 @@ struct App: SwiftUI.App {
             AppModel.self,
             Year.self,
             Month.self,
+            Month.IncomeModel.self,
             Month.ExpenseModel.self,
+            RecurringIncome.self,
             RecurringExpense.self,
+            Income.self,
             Expense.self
         ])
     }
@@ -23,8 +26,11 @@ struct App: SwiftUI.App {
         return try! ModelContainer(for: AppModel.self,
                                    Year.self,
                                    Month.self,
+                                   Month.IncomeModel.self,
                                    Month.ExpenseModel.self,
+                                   RecurringIncome.self,
                                    RecurringExpense.self,
+                                   Income.self,
                                    Expense.self,
                                    configurations: config)
     }

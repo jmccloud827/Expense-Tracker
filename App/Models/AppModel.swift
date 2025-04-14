@@ -3,9 +3,7 @@ import SwiftData
 
 @Model class AppModel: Identifiable {
     var id = UUID()
-    var income: Double = 0
-    var incomeType: IncomeType = IncomeType.yearly
-    var paychecks: [Double] = []
+    var monthlyIncomes: [RecurringIncome] = []
     var monthlyExpenses: [RecurringExpense] = []
     var years: [Year] = []
     var dateCreated = Date.now
@@ -20,17 +18,8 @@ import SwiftData
         currentYear?.months.first(where: { $0.integer == Calendar.current.component(.month, from: Date.now) })
     }
     
-    var monthlyIncome: Double {
-        switch incomeType {
-        case .yearly:
-            return income / 12
-        case .monthly:
-            return income
-        }
-    }
-    
-    var averagePaycheck: Double {
-        paychecks.reduce(0, +) / Double(paychecks.count)
+    var totalMonthlyIncome: Double {
+        monthlyIncomes.reduce(0) { $0 + $1.amount }
     }
     
     var totalMonthlyExpenses: Double {
@@ -47,7 +36,7 @@ import SwiftData
                 for month in (lastMonthIDInDatabase + 1) ... currentMonthID {
                     currentYear.months.append(
                         .init(integer: month,
-                              income: monthlyIncome,
+                              incomes: monthlyIncomes.map { .init(recurringIncome: $0) },
                               expenses: monthlyExpenses.map { .init(recurringExpense: $0) })
                     )
                 }
@@ -56,35 +45,39 @@ import SwiftData
             let year = Year(id: currentYearID)
             year.months.append(
                 .init(integer: currentMonthID,
-                      income: monthlyIncome,
+                      incomes: monthlyIncomes.map { .init(recurringIncome: $0) },
                       expenses: monthlyExpenses.map { .init(recurringExpense: $0) })
             )
             years.append(year)
         }
     }
     
-    func getExpensesFor(recurringExpense: RecurringExpense) -> [(year: Int, months: [(month: String, cost: Double)])] {
-        var expenses: [(year: Int, months: [(month: String, cost: Double)])] = []
-        for year in years {
-            var monthExpenses: [(month: String, cost: Double)] = []
-            for month in year.months {
-                monthExpenses.append(contentsOf: month.expenses.filter {
-                    $0.recurringExpense?.id == recurringExpense.id
-                }.map {
-                    (month.name, $0.expense.cost)
-                })
+    func getIncomes(for recurringIncome: RecurringIncome) -> [(year: Int, months: [(month: String, amount: Double)])] {
+        years.map { year in
+            let monthExpenses = year.months.flatMap { month in
+                month.incomes.filter { $0.recurringIncome?.id == recurringIncome.id }
+                    .map { (month.name, $0.income.amount) }
             }
-            
-            expenses.append((year.id, monthExpenses))
+            return (year.id, monthExpenses)
         }
-        
-        return expenses
+    }
+    
+    func getExpenses(for recurringExpense: RecurringExpense) -> [(year: Int, months: [(month: String, cost: Double)])] {
+        years.map { year in
+            let monthExpenses = year.months.flatMap { month in
+                month.expenses.filter { $0.recurringExpense?.id == recurringExpense.id }
+                    .map { (month.name, $0.expense.cost) }
+            }
+            return (year.id, monthExpenses)
+        }
     }
     
     static var sample: AppModel {
         let model = AppModel()
-        model.income = 90_000
-        model.incomeType = .yearly
+        model.monthlyIncomes = [
+            .init(name: "Paycheck", amount: 90000.0 / 12, type: .fixed),
+            .init(name: "Intrest", amount: 50, type: .variable)
+        ]
         model.monthlyExpenses = [
             .init(name: "Mortgage", cost: 2_000, type: .fixed),
             .init(name: "Water", cost: 50, type: .variable),
@@ -94,7 +87,13 @@ import SwiftData
         let currentYear = Year(id: currentYearID)
         let currentMonthID = Calendar.current.component(.month, from: Date.now)
         for monthID in 1 ... currentMonthID {
-            let month = Month(integer: monthID, income: model.monthlyIncome, expenses: model.monthlyExpenses.map { .init(recurringExpense: $0) })
+            let month = Month(integer: monthID, incomes: model.monthlyIncomes.map { .init(recurringIncome: $0) }, expenses: model.monthlyExpenses.map { .init(recurringExpense: $0) })
+            for incomeModel in month.incomes {
+                if let recurringIncome = incomeModel.recurringIncome,
+                   recurringIncome.type == .variable {
+                    incomeModel.income.amount = recurringIncome.amount * (Double.random(in: 0.5 ... 1.5))
+                }
+            }
             for expenseModel in month.expenses {
                 if let recurringExpense = expenseModel.recurringExpense,
                    recurringExpense.type == .variable {
@@ -107,7 +106,13 @@ import SwiftData
         
         let previousYear = Year(id: currentYearID - 1)
         for monthID in 1 ... 12 {
-            let month = Month(integer: monthID, income: model.monthlyIncome, expenses: model.monthlyExpenses.map { .init(recurringExpense: $0) })
+            let month = Month(integer: monthID, incomes: model.monthlyIncomes.map { .init(recurringIncome: $0) }, expenses: model.monthlyExpenses.map { .init(recurringExpense: $0) })
+            for incomeModel in month.incomes {
+                if let recurringIncome = incomeModel.recurringIncome,
+                   recurringIncome.type == .variable {
+                    incomeModel.income.amount = recurringIncome.amount * (Double.random(in: 0.5 ... 1.5))
+                }
+            }
             for expenseModel in month.expenses {
                 if let recurringExpense = expenseModel.recurringExpense,
                    recurringExpense.type == .variable {
@@ -120,9 +125,4 @@ import SwiftData
         
         return model
     }
-}
-
-enum IncomeType: String, CaseIterable, Codable {
-    case yearly = "Yearly"
-    case monthly = "Monthly"
 }

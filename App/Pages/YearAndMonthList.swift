@@ -4,6 +4,8 @@ struct YearAndMonthList: View {
     @Environment(AppModel.self) private var model
     
     @State private var showSettings = false
+    @State private var newIncome: RecurringIncome? = nil
+    @State private var showAddIncomeAlert = false
     @State private var newExpense: RecurringExpense? = nil
     @State private var showAddExpenseAlert = false
     
@@ -39,12 +41,25 @@ struct YearAndMonthList: View {
         }
         .sheet(isPresented: $showSettings) {
             NavigationStack {
-                EditIncomeAndMonthlyExpenses(model: model) { expense in
+                EditIncomeAndMonthlyExpenses(model: model) { income in
+                    newIncome = income
+                    showAddIncomeAlert = true
+                } onAddNewExpense: { expense in
                     newExpense = expense
                     showAddExpenseAlert = true
                 }
-                .navigationTitle("Settings")
+                .navigationTitle("Income and Expenses")
                 .navigationBarTitleDisplayMode(.inline)
+                .alert("Would you like to add this new income source to the current month?", isPresented: $showAddIncomeAlert) {
+                    Button("No", role: .cancel) {}
+                    
+                    Button("Yes") {
+                        if let currentMonth = model.currentMonth,
+                           let newIncome {
+                            currentMonth.incomes.append(.init(recurringIncome: newIncome))
+                        }
+                    }
+                }
                 .alert("Would you like to add this new expense to the current month?", isPresented: $showAddExpenseAlert) {
                     Button("No", role: .cancel) {}
                     
