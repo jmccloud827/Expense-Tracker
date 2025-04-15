@@ -2,7 +2,7 @@ import SwiftData
 
 @Model final class Year: Identifiable {
     var id: Int = 0
-    @Relationship(deleteRule: .cascade, inverse: \Month.year) private var monthsBackingData: [Month]? = []
+    @Relationship(deleteRule: .cascade, inverse: \Month.year) private var monthsBackingData: [Month]?
     var appModel: AppModel?
     
     var months: [Month] {
