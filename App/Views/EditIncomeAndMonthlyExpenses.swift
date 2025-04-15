@@ -16,6 +16,17 @@ struct EditIncomeAndMonthlyExpenses: View {
                         EditRecurringIncome(income: income, incomes: model.getIncomes(for: income))
                             .navigationTitle("Edit Expense")
                             .navigationBarTitleDisplayMode(.inline)
+                            .onChange(of: income.name) {
+                                model.years.forEach { year in
+                                    year.months.forEach { month in
+                                        month.incomes.forEach { income2 in
+                                            if income2.recurringID == income.id {
+                                                income2.name = income.name
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                     } label: {
                         LabeledContent {
                             Text(income.amount.formatted(.currency(code: "USD")))
@@ -49,6 +60,17 @@ struct EditIncomeAndMonthlyExpenses: View {
                             Text(expense.cost.formatted(.currency(code: "USD")))
                         } label: {
                             Text(expense.name)
+                        }
+                    }
+                    .onChange(of: expense.name) {
+                        model.years.forEach { year in
+                            year.months.forEach { month in
+                                month.expenses.forEach { expense2 in
+                                    if expense2.recurringID == expense.id {
+                                        expense2.name = expense.name
+                                    }
+                                }
+                            }
                         }
                     }
                 }

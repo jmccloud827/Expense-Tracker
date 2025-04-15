@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct YearAndMonthList: View {
+    @Environment(\.modelContext) private var modelContext
     @Environment(AppModel.self) private var model
     
     @State private var showSettings = false
@@ -8,6 +9,7 @@ struct YearAndMonthList: View {
     @State private var showAddIncomeAlert = false
     @State private var newExpense: RecurringExpense? = nil
     @State private var showAddExpenseAlert = false
+    @State private var showResetAlert = false
     
     var body: some View {
         List {
@@ -50,6 +52,17 @@ struct YearAndMonthList: View {
                 }
                 .navigationTitle("Income and Expenses")
                 .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    Button("Reset") {
+                        showResetAlert = true
+                    }
+                }
+                .confirmationDialog("Are you sure?", isPresented: $showResetAlert) {
+                    Button("Yes") {
+                        showResetAlert = false
+                        modelContext.delete(model)
+                    }
+                }
                 .alert("Would you like to add this new income source to the current month?", isPresented: $showAddIncomeAlert) {
                     Button("No", role: .cancel) {}
                     

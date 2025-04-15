@@ -5,16 +5,18 @@ struct EditMonth: View {
     
     var body: some View {
         Form {
-            Section("Recurring Income Sources") {
-                ForEach($month.incomes.filter { $0.wrappedValue.recurringIncome != nil }, id: \.id) { $incomeModel in
-                    DynamicCurrencyTextField($incomeModel.wrappedValue.name, value: $incomeModel.income.amount)
+            if !month.incomes.isEmpty {
+                Section("Recurring Income Sources") {
+                    ForEach($month.incomes.filter { $0.wrappedValue.recurringID != nil }, id: \.id) { $income in
+                        DynamicCurrencyTextField($income.wrappedValue.name, value: $income.amount)
+                    }
                 }
             }
             
             Section("Other Income Sources") {
-                ForEach($month.incomes.filter { $0.wrappedValue.recurringIncome == nil }, id: \.id) { $incomeModel in
-                    DynamicCurrencyTextField(value: $incomeModel.income.amount) {
-                        TextField("Name", text: $incomeModel.income.name)
+                ForEach($month.incomes.filter { $0.wrappedValue.recurringID == nil }, id: \.id) { $income in
+                    DynamicCurrencyTextField(value: $income.amount) {
+                        TextField("Name", text: $income.name)
                     }
                 }
                 
@@ -31,16 +33,18 @@ struct EditMonth: View {
                 Text("Total Income:")
             }
             
-            Section("Recurring Expenses") {
-                ForEach($month.expenses.filter { $0.wrappedValue.recurringExpense != nil }, id: \.id) { $expenseModel in
-                    DynamicCurrencyTextField($expenseModel.wrappedValue.name, value: $expenseModel.expense.cost)
+            if !month.expenses.isEmpty {
+                Section("Recurring Expenses") {
+                    ForEach($month.expenses.filter { $0.wrappedValue.recurringID != nil }, id: \.id) { $expense in
+                        DynamicCurrencyTextField($expense.wrappedValue.name, value: $expense.cost)
+                    }
                 }
             }
             
             Section("Other Expenses") {
-                ForEach($month.expenses.filter { $0.wrappedValue.recurringExpense == nil }, id: \.id) { $expenseModel in
-                    DynamicCurrencyTextField(value: $expenseModel.expense.cost) {
-                        TextField("Name", text: $expenseModel.expense.name)
+                ForEach($month.expenses.filter { $0.wrappedValue.recurringID == nil }, id: \.id) { $expense in
+                    DynamicCurrencyTextField(value: $expense.cost) {
+                        TextField("Name", text: $expense.name)
                     }
                 }
                 

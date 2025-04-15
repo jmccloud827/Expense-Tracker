@@ -3,9 +3,9 @@ import SwiftData
 
 @Model final class AppModel: Identifiable {
     var id = UUID()
-    @Relationship(inverse: \RecurringIncome.appModel) private var monthlyIncomesBackingData: [RecurringIncome]? = []
-    @Relationship(inverse: \RecurringExpense.appModel) private var monthlyExpensesBackingData: [RecurringExpense]? = []
-    @Relationship(inverse: \Year.appModel) private var yearsBackingData: [Year]? = []
+    @Relationship(deleteRule: .cascade, inverse: \RecurringIncome.appModel) private var monthlyIncomesBackingData: [RecurringIncome]? = []
+    @Relationship(deleteRule: .cascade, inverse: \RecurringExpense.appModel) private var monthlyExpensesBackingData: [RecurringExpense]? = []
+    @Relationship(deleteRule: .cascade, inverse: \Year.appModel) private var yearsBackingData: [Year]? = []
     var dateCreated = Date.now
     
     var monthlyIncomes: [RecurringIncome] {
@@ -70,8 +70,8 @@ import SwiftData
     func getIncomes(for recurringIncome: RecurringIncome) -> [(year: Int, months: [(month: String, amount: Double)])] {
         years.map { year in
             let monthExpenses = year.months.flatMap { month in
-                month.incomes.filter { $0.recurringIncome?.id == recurringIncome.id }
-                    .map { (month.name, $0.income.amount) }
+                month.incomes.filter { $0.recurringID == recurringIncome.id }
+                    .map { (month.name, $0.amount) }
             }
             return (year.id, monthExpenses)
         }
@@ -80,8 +80,8 @@ import SwiftData
     func getExpenses(for recurringExpense: RecurringExpense) -> [(year: Int, months: [(month: String, cost: Double)])] {
         years.map { year in
             let monthExpenses = year.months.flatMap { month in
-                month.expenses.filter { $0.recurringExpense?.id == recurringExpense.id }
-                    .map { (month.name, $0.expense.cost) }
+                month.expenses.filter { $0.recurringID == recurringExpense.id }
+                    .map { (month.name, $0.cost) }
             }
             return (year.id, monthExpenses)
         }
@@ -102,42 +102,36 @@ import SwiftData
         let currentYear = Year(id: currentYearID)
         let currentMonthID = Calendar.current.component(.month, from: Date.now)
         for monthID in 1 ... currentMonthID {
-            let month = Month(integer: monthID, incomes: model.monthlyIncomes.map { .init(recurringIncome: $0) }, expenses: model.monthlyExpenses.map { .init(recurringExpense: $0) })
-            for incomeModel in month.incomes {
-                if let recurringIncome = incomeModel.recurringIncome,
-                   recurringIncome.type == .variable {
-                    incomeModel.income.amount = recurringIncome.amount * (Double.random(in: 0.5 ... 1.5))
-                }
-            }
-            for expenseModel in month.expenses {
-                if let recurringExpense = expenseModel.recurringExpense,
-                   recurringExpense.type == .variable {
-                    expenseModel.expense.cost = expenseModel.expense.cost * (Double.random(in: 0.5 ... 1.5))
-                }
-            }
-            currentYear.months.append(month)
+            currentYear.months.append(createMonth(id: monthID, model: model))
         }
         model.years.append(currentYear)
         
         let previousYear = Year(id: currentYearID - 1)
         for monthID in 1 ... 12 {
-            let month = Month(integer: monthID, incomes: model.monthlyIncomes.map { .init(recurringIncome: $0) }, expenses: model.monthlyExpenses.map { .init(recurringExpense: $0) })
-            for incomeModel in month.incomes {
-                if let recurringIncome = incomeModel.recurringIncome,
-                   recurringIncome.type == .variable {
-                    incomeModel.income.amount = recurringIncome.amount * (Double.random(in: 0.5 ... 1.5))
-                }
-            }
-            for expenseModel in month.expenses {
-                if let recurringExpense = expenseModel.recurringExpense,
-                   recurringExpense.type == .variable {
-                    expenseModel.expense.cost = expenseModel.expense.cost * (Double.random(in: 0.5 ... 1.5))
-                }
-            }
-            previousYear.months.append(month)
+            previousYear.months.append(createMonth(id: monthID, model: model))
         }
         model.years.append(previousYear)
         
         return model
+    }
+    
+    private static func createMonth(id: Int, model: AppModel) -> Month {
+        let month = Month(integer: id, incomes: model.monthlyIncomes.map { .init(recurringIncome: $0) }, expenses: model.monthlyExpenses.map { .init(recurringExpense: $0) })
+        for income in month.incomes {
+            if let recurringID = income.recurringID,
+               let recurringIncome = model.monthlyIncomes.first(where: { $0.id == recurringID }),
+               recurringIncome.type == .variable {
+                income.amount = recurringIncome.amount * (Double.random(in: 0.5 ... 1.5))
+            }
+        }
+        for expense in month.expenses {
+            if let recurringID = expense.recurringID,
+               let recurringExpense = model.monthlyExpenses.first(where: { $0.id == recurringID }),
+               recurringExpense.type == .variable {
+                expense.cost = recurringExpense.cost * (Double.random(in: 0.5 ... 1.5))
+            }
+        }
+        
+        return month
     }
 }

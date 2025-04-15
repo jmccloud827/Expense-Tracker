@@ -6,10 +6,17 @@ import SwiftData
     var name: String = ""
     var cost: Double = 0.0
     var dateCreated = Date.now
-    var expenseModel: Month.ExpenseModel?
+    var recurringID: UUID?
+    var month: Month?
     
     init(name: String, cost: Double) {
         self.name = name
         self.cost = cost
+    }
+    
+    init(recurringExpense: RecurringExpense) {
+        self.name = recurringExpense.name
+        self.cost = recurringExpense.cost
+        self.recurringID = recurringExpense.id
     }
 }

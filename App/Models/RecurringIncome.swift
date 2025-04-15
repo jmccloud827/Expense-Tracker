@@ -8,7 +8,6 @@ import SwiftData
     var type: `Type` = `Type`.fixed
     var dateCreated = Date.now
     var appModel: AppModel?
-    var incomeModel: Month.IncomeModel?
     
     init(name: String, amount: Double, type: Type) {
         self.name = name
