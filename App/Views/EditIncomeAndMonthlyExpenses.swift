@@ -95,13 +95,13 @@ struct EditIncomeAndMonthlyExpenses: View {
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .navigation) {
-                            Button("Cancel") {
+                            Button("Cancel", systemImage: "xmark") {
                                 newIncome = nil
                             }
                         }
                         
                         ToolbarItem(placement: .automatic) {
-                            Button("Done") {
+                            Button("Done", systemImage: "checkmark", role: .confirm) {
                                 model.monthlyIncomes.append(income)
                                 newIncome = nil
                                 onAddNewIncome(income)
@@ -117,13 +117,13 @@ struct EditIncomeAndMonthlyExpenses: View {
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .navigation) {
-                            Button("Cancel") {
+                            Button("Cancel", systemImage: "xmark") {
                                 newExpense = nil
                             }
                         }
                         
                         ToolbarItem(placement: .automatic) {
-                            Button("Done") {
+                            Button("Done", systemImage: "checkmark", role: .confirm) {
                                 model.monthlyExpenses.append(expense)
                                 newExpense = nil
                                 onAddNewExpense(expense)
